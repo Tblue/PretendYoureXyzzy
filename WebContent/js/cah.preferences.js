@@ -38,6 +38,19 @@ cah.Preferences.apply = function() {
     cah.ignoreList[this] = true;
   });
 
+  var oldDesktopNotifications = cah.desktopNotifications;
+  cah.desktopNotifications = !!$("#desktop_notifications").prop("checked");
+
+  // Need to ask user for notification permission if user has not indicated a preference yet, or the user just saved
+  // the settings in the settings dialog:
+  if (cah.desktopNotifications &&
+      (Notification.permission === "default" || Notification.permission === "denied" && oldDesktopNotifications !== undefined)) {
+    cah.log.debug("Asking user for notification permission");
+    Notification.requestPermission();
+  } else {
+    cah.log.debug("NOT asking user for notification permission");
+  }
+
   // TODO card set filters
 };
 
@@ -62,6 +75,17 @@ cah.Preferences.load = function() {
     $("#ignore_list").val("");
   }
 
+  if (! ("Notification" in window)) {
+    // No support for Desktop Notifications:
+    $("#desktop_notifications").prop('checked', false);
+    $("#desktop_notifications").prop('disabled', true);
+  } else {
+    $("#desktop_notifications").prop(
+      'checked',
+      $.cookie("desktop_notifications") !== "false"
+    );
+  }
+
   // If we haven't gotten the list of card sets from the server yet, this should fail silently.
   cah.Preferences.updateCardSetFilters();
 
@@ -84,6 +108,11 @@ cah.Preferences.save = function() {
   }
 
   cah.setCookie("ignore_list", $("#ignore_list").val());
+
+  cah.setCookie(
+    "desktop_notifications",
+    !!$("#desktop_notifications").prop("checked")
+  );
 
   // card set filters
   var bannedSets = [];

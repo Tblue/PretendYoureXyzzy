@@ -208,6 +208,11 @@ boolean allowBlankCards = injector.getInstance(Key.get(new TypeLiteral<Boolean>(
         </dfn>
       </label>
       <input type="checkbox" id="no_persistent_id" />
+      <br/>
+      <label for="desktop_notifications">
+        Enable Desktop Notifications:
+      </label>
+      <input type="checkbox" id="desktop_notifications" />
     </div>
     <div id="tab-gamelist-filters">
       You will have to click Refresh Games after saving any changes here.
