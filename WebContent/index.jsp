@@ -59,6 +59,8 @@ to, for instance, display the number of connected players.
   It is not tied in any way to your username, except possibly if a server error occurs. Gameplay
   results are logged permanently, but without information identifying you.
 </p>
+
+<!--
 <p>Recent Changes:</p>
 <ul>
   <li>3 September 2018:<ul>
@@ -68,6 +70,8 @@ to, for instance, display the number of connected players.
   </ul></li>
   <li><a href="changelog.html">Older entries.</a></li>
 </ul>
+-->
+
 <p>Known issues:</p>
 <ul>
   <li><strong>Do not open the game more than once in the same browser.</strong> Neither instance
