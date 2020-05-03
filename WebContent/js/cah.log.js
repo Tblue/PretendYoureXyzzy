@@ -170,6 +170,30 @@ cah.log.ariaStatus = function(text) {
 };
 
 /**
+ * Show a Desktop Notification, if enabled by the user.
+ *
+ * Will not show notifications if the window is focused.
+ *
+ * @param {string}
+ *          text Body of the notification (HTML).
+ */
+cah.log.desktop = function(text) {
+  cah.log.debug("Desktop notification", text);
+
+  if (! cah.desktopNotifications || cah.windowActive) {
+    return;
+  }
+
+  new Notification(
+    "Pretend You're Xyzzy",
+    {
+      lang: 'EN',
+      body: text,
+    }
+  );
+};
+
+/**
  * Log a message if debugging is enabled, optionally dumping the contents of an object.
  * 
  * If SILENT_DEBUG is on, and IE is in use, it can cause the game to break if the debugger isn't

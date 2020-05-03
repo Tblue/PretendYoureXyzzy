@@ -920,6 +920,13 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
   if (playerName == cah.nickname) {
     $(".game_message", this.element_).text(cah.$.GamePlayerStatus_msg_2[playerStatus]);
 
+    if (playerStatus !== cah.$.GamePlayerStatus.IDLE && playerStatus !== oldStatus &&
+        // Ignore state change from "Select a winning card" to "You are the Card Czar" (happens right after selecting
+        // a winner and waiting for the next round to start).
+        ! (oldStatus === cah.$.GamePlayerStatus.JUDGING && playerStatus === cah.$.GamePlayerStatus.JUDGE)) {
+      cah.log.desktop(cah.$.GamePlayerStatus_msg_2[playerStatus]);
+    }
+
     if (playerStatus == cah.$.GamePlayerStatus.PLAYING && this.handSelectedCard_ != null) {
       $(".confirm_card", this.element_).removeAttr("disabled");
     } else if (playerStatus == cah.$.GamePlayerStatus.JUDGING && this.roundSelectedCard_ != null) {
@@ -1015,6 +1022,7 @@ cah.Game.prototype.roundComplete = function(data) {
         + "' rel='noopener' target='_blank'>Permalink</a>";
   }
   cah.log.status_with_game(this, msg, undefined, true);
+  cah.log.desktop(msg);
 
   // update the previous round display
   $(".game_last_round_winner", this.element_).text(roundWinner);
@@ -1031,8 +1039,9 @@ cah.Game.prototype.roundComplete = function(data) {
  * Notify the user that they are running out of time to play.
  */
 cah.Game.prototype.hurryUp = function() {
-  cah.log.status_with_game(this,
-      "Hurry up! You have less than 10 seconds to decide, or you will be skipped.");
+  var msg = "Hurry up! You have less than 10 seconds to decide, or you will be skipped.";
+  cah.log.status_with_game(this, msg);
+  cah.log.desktop(msg);
 };
 
 /**
