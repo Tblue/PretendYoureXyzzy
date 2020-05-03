@@ -176,8 +176,11 @@ cah.log.ariaStatus = function(text) {
  *
  * @param {string}
  *          text Body of the notification (HTML).
+ * @param {string}
+ *          language Language of the notification. BCP 47 language tag, e. g. "EN".
+ *                   Defaults to "EN". Empty string "" means the language is unknown.
  */
-cah.log.desktop = function(text) {
+cah.log.desktop = function(text, language) {
   cah.log.debug("Desktop notification", text);
 
   if (! cah.desktopNotifications || cah.windowActive) {
@@ -187,7 +190,7 @@ cah.log.desktop = function(text) {
   new Notification(
     "Pretend You're Xyzzy",
     {
-      lang: 'EN',
+      lang: language === undefined ? 'EN' : language,
       body: text,
     }
   );

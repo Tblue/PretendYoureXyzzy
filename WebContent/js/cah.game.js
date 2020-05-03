@@ -950,6 +950,8 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
     } else if (playerStatus == cah.$.GamePlayerStatus.PLAYING) {
       $(".game_hand_filter", this.element_).addClass("hide");
     }
+  } else if (playerStatus === cah.$.GamePlayerStatus.WINNER) {
+    cah.log.desktop(playerName + " wins the game!");
   }
 
   if (playerStatus == cah.$.GamePlayerStatus.JUDGE
@@ -1051,8 +1053,9 @@ cah.Game.prototype.hurryUp = function() {
  *          data Event data from server.
  */
 cah.Game.prototype.playerKickedIdle = function(data) {
-  cah.log.status_with_game(this, data[cah.$.LongPollResponse.NICKNAME]
-      + " was kicked for being idle for too many rounds.");
+  var msg = data[cah.$.LongPollResponse.NICKNAME] + " was kicked for being idle for too many rounds.";
+  cah.log.status_with_game(this, msg);
+  cah.log.desktop(msg);
 };
 
 /**
@@ -1062,8 +1065,9 @@ cah.Game.prototype.playerKickedIdle = function(data) {
  *          data Event data from server.
  */
 cah.Game.prototype.playerSkipped = function(data) {
-  cah.log.status_with_game(this, data[cah.$.LongPollResponse.NICKNAME]
-      + " was skipped this round for being idle for too long.");
+  var msg = data[cah.$.LongPollResponse.NICKNAME] + " was skipped this round for being idle for too long.";
+  cah.log.status_with_game(this, msg);
+  cah.log.desktop(msg);
 };
 
 /**
@@ -1083,10 +1087,14 @@ cah.Game.prototype.reshuffle = function(deck) {
  *          data Event data from the server.
  */
 cah.Game.prototype.judgeLeft = function(data) {
-  cah.log.status_with_game(this,
-      "The Card Czar has left the game. Cards played this round are being returned to hands.");
-  cah.log.status_with_game(this, "The next round will begin in "
-      + (data[cah.$.LongPollResponse.INTERMISSION] / 1000) + " seconds.");
+  var msg = "The Card Czar has left the game. Cards played this round are being returned to hands.";
+  cah.log.status_with_game(this, msg);
+  cah.log.desktop(msg);
+
+  msg = "The next round will begin in " + (data[cah.$.LongPollResponse.INTERMISSION] / 1000) + " seconds.";
+  cah.log.status_with_game(this, msg);
+  cah.log.desktop(msg);
+
   cah.log.status_with_game(this, "(Displayed state will look weird until the next round.)");
 };
 
@@ -1094,8 +1102,11 @@ cah.Game.prototype.judgeLeft = function(data) {
  * The judge was skipped for taking too long.
  */
 cah.Game.prototype.judgeSkipped = function() {
-  cah.log.status_with_game(this, "The Card Czar has taken too long to decide and has been skipped."
-      + " Cards played this round are being returned to hands.");
+  var msg = "The Card Czar has taken too long to decide and has been skipped."
+      + " Cards played this round are being returned to hands.";
+
+  cah.log.status_with_game(this, msg);
+  cah.log.desktop(msg);
 };
 
 /**
@@ -1333,7 +1344,10 @@ cah.Game.prototype.dispose = function() {
  */
 cah.Game.prototype.playerJoin = function(player) {
   if (player != cah.nickname) {
-    cah.log.status_with_game(this, player + " has joined the game.");
+    var msg = player + " has joined the game.";
+    cah.log.status_with_game(this, msg);
+    cah.log.desktop(msg);
+
     this.refreshGameStatus();
   } else {
     cah.log.status_with_game(this, "You have joined the game.");
@@ -1348,7 +1362,10 @@ cah.Game.prototype.playerJoin = function(player) {
  */
 cah.Game.prototype.playerLeave = function(player) {
   if (player != cah.nickname) {
-    cah.log.status_with_game(this, player + " has left the game.");
+    var msg = player + " has left the game.";
+    cah.log.status_with_game(this, msg);
+    cah.log.desktop(msg);
+
     this.refreshGameStatus();
   } else {
     cah.log.status_with_game(this, "You have left the game.");
@@ -1413,6 +1430,7 @@ cah.Game.prototype.refreshGameStatus = function() {
  *          data Data from server.
  */
 cah.Game.prototype.stateChange = function(data) {
+  var oldState = this.state_;
   this.state_ = data[cah.$.LongPollResponse.GAME_STATE];
 
   $(".scorecard", this.scoreboardElement_).removeClass("selected");
@@ -1425,6 +1443,10 @@ cah.Game.prototype.stateChange = function(data) {
       $("#stop_game").hide();
       // round
       this.showOptions_();
+
+      if (oldState !== this.state_) {
+        cah.log.desktop("Returning to lobby.");
+      }
 
       break;
 

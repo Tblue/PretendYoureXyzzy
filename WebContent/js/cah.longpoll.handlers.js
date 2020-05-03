@@ -74,7 +74,10 @@ cah.longpoll.EventHandlers[cah.$.LongPollEvent.NOOP] = function(data) {
 };
 
 cah.longpoll.EventHandlers[cah.$.LongPollEvent.KICKED] = function() {
-  cah.log.status("You have been kicked by the server administrator.");
+  var msg = "You have been kicked by the server administrator.";
+  cah.log.status(msg);
+  cah.log.desktop(msg);
+
   cah.longpoll.Resume = false;
   $("input").attr("disabled", "disabled");
   $("#menubar_left").empty();
@@ -83,7 +86,10 @@ cah.longpoll.EventHandlers[cah.$.LongPollEvent.KICKED] = function() {
 };
 
 cah.longpoll.EventHandlers[cah.$.LongPollEvent.BANNED] = function() {
-  cah.log.status("You have been banned by the server administrator.");
+  var msg = "You have been banned by the server administrator.";
+  cah.log.status(msg);
+  cah.log.desktop(msg);
+
   cah.longpoll.Resume = false;
   $("input").attr("disabled", "disabled");
   $("#menubar_left").empty();
@@ -115,7 +121,9 @@ cah.longpoll.showChat_ = function(data, wasFiltered) {
   }
   if (data[cah.$.LongPollResponse.WALL]) {
     // treat these specially
-    cah.log.everyWindow("Global message from " + who + ": " + message, clazz, false, title);
+    var msg = "Global message from " + who + ": " + message;
+    cah.log.everyWindow(msg, clazz, false, title);
+    cah.log.desktop(msg, '');
   } else {
     if (cah.$.LongPollResponse.GAME_ID in data) {
       game = data[cah.$.LongPollResponse.GAME_ID];
@@ -134,10 +142,13 @@ cah.longpoll.showChat_ = function(data, wasFiltered) {
 
     // don't display our own chat
     if (from != cah.nickname && show) {
-      if (data[cah.$.LongPollResponse.EMOTE]) {
-        cah.log.status_with_game(game, "* " + who + " " + message, clazz, false, title);
-      } else {
-        cah.log.status_with_game(game, "<" + who + "> " + message, clazz, false, title);
+      var msg = data[cah.$.LongPollResponse.EMOTE] ? "* " + who + " " + message : "<" + who + "> " + message;
+      cah.log.status_with_game(game, msg, clazz, false, title);
+
+      if (! wasFiltered && game !== null) {
+        // Don't spam the admin with filtered messages, and don't spam global chat messages in any case.
+        // Let's focus on per-game chat messages, which are actually important to the user.
+        cah.log.desktop(msg, '');
       }
     }
   }
@@ -235,8 +246,9 @@ cah.longpoll.EventHandlers[cah.$.LongPollEvent.KICKED_FROM_GAME_IDLE] = function
   cah.GameList.instance.show();
   cah.GameList.instance.update();
 
-  cah.log.error("You were kicked from game " + data[cah.$.LongPollResponse.GAME_ID]
-      + " for being idle for too long.");
+  var msg = "You were kicked from game " + data[cah.$.LongPollResponse.GAME_ID] + " for being idle for too long.";
+  cah.log.error(msg);
+  cah.log.desktop(msg);
 };
 
 /**
