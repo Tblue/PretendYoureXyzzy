@@ -164,9 +164,9 @@ cah.GameList.prototype.processUpdate = function(gameData) {
   }
 
   if (gameData[cah.$.AjaxResponse.GAMES].length < gameData[cah.$.AjaxResponse.MAX_GAMES]) {
-    $("#create_game").removeAttr("disabled");
+    $("#create_game").prop("disabled", false);
   } else {
-    $("#create_game").attr("disabled", "disabled");
+    $("#create_game").prop("disabled", true);
   }
 
   this.applyFilter();

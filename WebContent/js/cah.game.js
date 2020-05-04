@@ -361,13 +361,13 @@ cah.Game.prototype.showGamePermalink_ = function(data) {
  */
 cah.Game.prototype.showLastRoundClick_ = function() {
   if (this.showingLastRound_) {
-    $(".game_show_last_round", this.element_).attr("value", "Show Last Round");
+    $(".game_show_last_round", this.element_).prop("value", "Show Last Round");
     $(".game_black_card_round_indicator", this.element_).text("this round is");
     $(".game_black_card", this.element_).empty().append(this.blackCard_.getElement());
     $(".game_white_card_wrapper", this.element_).removeClass("hide");
     $(".game_last_round", this.element_).addClass("hide");
   } else {
-    $(".game_show_last_round", this.element_).attr("value", "Show Current Round");
+    $(".game_show_last_round", this.element_).prop("value", "Show Current Round");
     $(".game_black_card_round_indicator", this.element_).text("last round was");
     $(".game_black_card", this.element_).empty().append(this.lastBlackCard_.getElement());
     $(".game_white_card_wrapper", this.element_).addClass("hide");
@@ -397,12 +397,12 @@ cah.Game.prototype.showOptionsClick_ = function() {
  * @private
  */
 cah.Game.prototype.showOrHidePassword_ = function() {
-  if ($(".game_hide_password", this.optionsElement_).attr("checked")) {
+  if ($(".game_hide_password", this.optionsElement_).prop("checked")) {
     $(".game_password", this.optionsElement_).hide();
     $(".game_fake_password", this.optionsElement_).show();
-    $(".game_fake_password", this.optionsElement_).attr("value",
-        $(".game_password", this.optionsElement_).attr("value"));
-    $(".game_fake_password", this.optionsElement_).attr("disabled", "disabled");
+    $(".game_fake_password", this.optionsElement_).prop("value",
+        $(".game_password", this.optionsElement_).prop("value"));
+    $(".game_fake_password", this.optionsElement_).prop("disabled", true);
   } else {
     $(".game_password", this.optionsElement_).show();
     $(".game_fake_password", this.optionsElement_).hide();
@@ -514,7 +514,7 @@ cah.Game.prototype.removeAllCards = function() {
     this.removeCardFromHand(this.hand_[0]);
   }
   this.handSelectedCard_ = null;
-  $(".confirm_card", this.element_).attr("disabled", "disabled");
+  $(".confirm_card", this.element_).prop("disabled", true);
   $(".game_black_card", this.element_).empty();
   for ( var index in this.roundCards_) {
     $(this.roundCards_[index]).off(".round");
@@ -595,7 +595,7 @@ cah.Game.prototype.addRoundWhiteCard_ = function(cards) {
  * @private
  */
 cah.Game.prototype.handCardMouseEnter_ = function(e) {
-  if (!$(".game_animate_cards", this.element_).attr("checked")) {
+  if (!$(".game_animate_cards", this.element_).prop("checked")) {
     return;
   }
   $(e.data.card.getElement()).css("z-index", "400").animate({
@@ -631,7 +631,7 @@ cah.Game.prototype.handCardMouseLeave_ = function(e) {
  * @private
  */
 cah.Game.prototype.roundCardMouseEnter_ = function(e) {
-  if (!$(".game_animate_cards", this.element_).attr("checked")) {
+  if (!$(".game_animate_cards", this.element_).prop("checked")) {
     return;
   }
   $(e.data.card.getElement()).css("z-index", "201").animate({
@@ -876,10 +876,10 @@ cah.Game.prototype.updateGameStatus = function(data) {
   $(".timer_multiplier", this.optionsElement_).val(options[cah.$.GameOptionData.TIMER_MULTIPLIER]);
 
   var cardSetIds = options[cah.$.GameOptionData.CARD_SETS];// .split(',');
-  $(".card_set", this.optionsElement_).removeAttr("checked");
+  $(".card_set", this.optionsElement_).prop("checked", false);
   for ( var key in cardSetIds) {
     var cardSetId = cardSetIds[key];
-    $("#card_set_" + this.id_ + "_" + cardSetId, this.optionsElement_).attr("checked", "checked");
+    $("#card_set_" + this.id_ + "_" + cardSetId, this.optionsElement_).prop("checked", true);
   }
   $(".blanks_limit", this.optionsElement_).val(options[cah.$.GameOptionData.BLANKS_LIMIT]);
 
@@ -928,11 +928,11 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
     }
 
     if (playerStatus == cah.$.GamePlayerStatus.PLAYING && this.handSelectedCard_ != null) {
-      $(".confirm_card", this.element_).removeAttr("disabled");
+      $(".confirm_card", this.element_).prop("disabled", false);
     } else if (playerStatus == cah.$.GamePlayerStatus.JUDGING && this.roundSelectedCard_ != null) {
-      $(".confirm_card", this.element_).removeAttr("disabled");
+      $(".confirm_card", this.element_).prop("disabled", false);
     } else {
-      $(".confirm_card", this.element_).attr("disabled", "disabled");
+      $(".confirm_card", this.element_).prop("disabled", true);
     }
 
     if (playerStatus != cah.$.GamePlayerStatus.PLAYING) {
@@ -995,7 +995,7 @@ cah.Game.prototype.updateSpectator = function(spectator) {
   if (spectator == cah.nickname) {
     $(".game_message", this.element_).text(
         cah.$.GamePlayerStatus_msg_2[cah.$.GamePlayerStatus.SPECTATOR]);
-    $(".confirm_card", this.element_).attr("disabled", "disabled");
+    $(".confirm_card", this.element_).prop("disabled", true);
   }
 };
 
@@ -1016,7 +1016,7 @@ cah.Game.prototype.roundComplete = function(data) {
   var roundWinner = data[cah.$.LongPollResponse.ROUND_WINNER];
   var scoreCard = this.scoreCards_[roundWinner];
   $(scoreCard.getElement()).addClass("selected");
-  $(".confirm_card", this.element_).attr("disabled", "disabled");
+  $(".confirm_card", this.element_).prop("disabled", true);
   var msg = roundWinner + " wins the round.  The next round will begin in "
       + (data[cah.$.LongPollResponse.INTERMISSION] / 1000) + " seconds.";
   if (cah.$.LongPollResponse.ROUND_PERMALINK in data) {
@@ -1031,7 +1031,7 @@ cah.Game.prototype.roundComplete = function(data) {
   $(".game_last_round_cards", this.element_).empty().append(
       $(".game_white_card_wrapper .card_holder", this.element_).clone());
   this.lastBlackCard_ = this.blackCard_;
-  $(".game_show_last_round", this.element_).removeAttr("disabled");
+  $(".game_show_last_round", this.element_).prop("disabled", false);
 
   // speak it in screen readers
   cah.log.ariaStatus("The round was won by " + roundWinner + " with " + ariaText);
@@ -1182,12 +1182,12 @@ cah.Game.prototype.handCardClick_ = function(e) {
   // if the user clicked on the same card, deselect it.
   if (card == this.handSelectedCard_) {
     this.handSelectedCard_ = null;
-    $(".confirm_card", this.element_).attr("disabled", "disabled");
+    $(".confirm_card", this.element_).prop("disabled", true);
     cah.log.ariaStatus("Deselected card.");
   } else {
     this.handSelectedCard_ = card;
     $(".card", card.getElement()).addClass("selected");
-    $(".confirm_card", this.element_).removeAttr("disabled");
+    $(".confirm_card", this.element_).prop("disabled", false);
     cah.log.ariaStatus("Selected card.");
   }
 };
@@ -1230,12 +1230,12 @@ cah.Game.prototype.roundCardClick_ = function(e) {
   // if the user clicked on the same card, deselect it.
   if (card == this.roundSelectedCard_) {
     this.roundSelectedCard_ = null;
-    $(".confirm_card", this.element_).attr("disabled", "disabled");
+    $(".confirm_card", this.element_).prop("disabled", true);
     cah.log.ariaStatus("Deselected card.");
   } else {
     this.roundSelectedCard_ = card;
     $(".card", card.getElement()).addClass("selected");
-    $(".confirm_card", this.element_).removeAttr("disabled");
+    $(".confirm_card", this.element_).prop("disabled", false);
     cah.log.ariaStatus("Selected card.");
   }
 };
@@ -1293,7 +1293,7 @@ cah.Game.prototype.playCardComplete = function() {
     this.addRoundWhiteCard_(Array(this.handSelectedCard_));
     this.handSelectedCard_ = null;
   }
-  $(".confirm_card", this.element_).attr("disabled", "disabled");
+  $(".confirm_card", this.element_).prop("disabled", true);
   this.enableCardControls_();
 };
 
@@ -1500,15 +1500,15 @@ cah.Game.prototype.showOptions_ = function() {
  */
 cah.Game.prototype.updateOptionsEnabled_ = function() {
   if (this.host_ == cah.nickname && this.state_ == cah.$.GameState.LOBBY) {
-    $("select", this.optionsElement_).removeAttr("disabled");
-    $("input", this.optionsElement_).removeAttr("disabled");
+    $("select", this.optionsElement_).prop("disabled", false);
+    $("input", this.optionsElement_).prop("disabled", false);
     $(".options_host_only", this.optionsElement_).addClass("hide");
   } else {
-    $("select", this.optionsElement_).attr("disabled", "disabled");
-    $("input", this.optionsElement_).attr("disabled", "disabled");
+    $("select", this.optionsElement_).prop("disabled", true);
+    $("input", this.optionsElement_).prop("disabled", true);
     $(".options_host_only", this.optionsElement_).removeClass("hide");
     // let all players adjust the "hide password" option themselves
-    $(".game_hide_password", this.optionsElement_).removeAttr("disabled");
+    $(".game_hide_password", this.optionsElement_).prop("disabled", false);
   }
 };
 

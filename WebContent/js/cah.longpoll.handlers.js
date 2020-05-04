@@ -30,7 +30,7 @@ cah.longpoll.ErrorCodeHandlers[cah.$.ErrorCode.NOT_REGISTERED] = function(data) 
   cah.longpoll.Resume = false;
   cah.log.error("The server seems to have restarted. Any in-progress games have been lost.");
   cah.log.error("You will need to refresh the page to start a new game.");
-  $("input").attr("disabled", "disabled");
+  $("input").prop("disabled", true);
 };
 
 cah.longpoll.EventHandlers[cah.$.LongPollEvent.NEW_PLAYER] = function(data) {
@@ -79,7 +79,7 @@ cah.longpoll.EventHandlers[cah.$.LongPollEvent.KICKED] = function() {
   cah.log.desktop(msg);
 
   cah.longpoll.Resume = false;
-  $("input").attr("disabled", "disabled");
+  $("input").prop("disabled", true);
   $("#menubar_left").empty();
   $("#main").empty();
   $("#info_area").empty();
@@ -91,7 +91,7 @@ cah.longpoll.EventHandlers[cah.$.LongPollEvent.BANNED] = function() {
   cah.log.desktop(msg);
 
   cah.longpoll.Resume = false;
-  $("input").attr("disabled", "disabled");
+  $("input").prop("disabled", true);
   $("#menubar_left").empty();
   $("#main").empty();
   $("#info_area").empty();

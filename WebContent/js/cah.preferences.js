@@ -30,8 +30,8 @@
 cah.Preferences = {};
 
 cah.Preferences.apply = function() {
-  cah.hideConnectQuit = !!$("#hide_connect_quit").attr("checked");
-  cah.noPersistentId = !!$("#no_persistent_id").attr("checked");
+  cah.hideConnectQuit = !!$("#hide_connect_quit").prop("checked");
+  cah.noPersistentId = !!$("#no_persistent_id").prop("checked");
 
   cah.ignoreList = {};
   $($('#ignore_list').val().split('\n')).each(function() {
@@ -56,16 +56,16 @@ cah.Preferences.apply = function() {
 
 cah.Preferences.load = function() {
   if ($.cookie("hide_connect_quit")) {
-    $("#hide_connect_quit").attr('checked', 'checked');
+    $("#hide_connect_quit").prop('checked', true);
   } else {
-    $("#hide_connect_quit").removeAttr('checked');
+    $("#hide_connect_quit").prop('checked', false);
   }
 
   if ($.cookie("no_persistent_id")) {
-    $("#no_persistent_id").attr('checked', 'checked');
+    $("#no_persistent_id").prop('checked', true);
     cah.persistentId = null;
   } else {
-    $("#no_persistent_id").removeAttr('checked');
+    $("#no_persistent_id").prop('checked', false);
     cah.persistentId = $.cookie("persistent_id");
   }
 
@@ -93,13 +93,13 @@ cah.Preferences.load = function() {
 };
 
 cah.Preferences.save = function() {
-  if ($("#hide_connect_quit").attr("checked")) {
+  if ($("#hide_connect_quit").prop("checked")) {
     cah.setCookie("hide_connect_quit", true);
   } else {
     cah.removeCookie("hide_connect_quit");
   }
 
-  if ($("#no_persistent_id").attr("checked")) {
+  if ($("#no_persistent_id").prop("checked")) {
     cah.setCookie("no_persistent_id", true);
     cah.removeCookie("persistent_id");
     cah.persistentId = null;
