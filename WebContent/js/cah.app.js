@@ -61,11 +61,6 @@ $(document).ready(function() {
   $("#tabs").tabs();
   $("#button-global").click();
 
-  if ($.browser.mozilla) {
-    // Firefox sucks.
-    $("body").css("font-size", "12px");
-  }
-
   $(window).resize(app_resize);
   app_resize();
 });
