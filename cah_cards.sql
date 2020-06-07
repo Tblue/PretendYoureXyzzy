@@ -9,49 +9,29 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.7
--- Dumped by pg_dump version 10.1
-
--- Started on 2018-02-27 15:12:09
+-- Dumped from database version 12.3
+-- Dumped by pg_dump version 12.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- TOC entry 1 (class 3079 OID 12427)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- TOC entry 2201 (class 0 OID 0)
--- Dependencies: 1
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
--- TOC entry 185 (class 1259 OID 17734)
 -- Name: black_cards; Type: TABLE; Schema: public; Owner: pyx
 --
 
-CREATE TABLE black_cards (
+CREATE TABLE public.black_cards (
     id integer NOT NULL,
     draw integer NOT NULL,
     pick integer NOT NULL,
@@ -60,14 +40,13 @@ CREATE TABLE black_cards (
 );
 
 
-ALTER TABLE black_cards OWNER TO pyx;
+ALTER TABLE public.black_cards OWNER TO pyx;
 
 --
--- TOC entry 186 (class 1259 OID 17742)
 -- Name: card_set; Type: TABLE; Schema: public; Owner: pyx
 --
 
-CREATE TABLE card_set (
+CREATE TABLE public.card_set (
     id integer NOT NULL,
     active boolean NOT NULL,
     base_deck boolean NOT NULL,
@@ -77,40 +56,37 @@ CREATE TABLE card_set (
 );
 
 
-ALTER TABLE card_set OWNER TO pyx;
+ALTER TABLE public.card_set OWNER TO pyx;
 
 --
--- TOC entry 187 (class 1259 OID 17750)
 -- Name: card_set_black_card; Type: TABLE; Schema: public; Owner: pyx
 --
 
-CREATE TABLE card_set_black_card (
+CREATE TABLE public.card_set_black_card (
     card_set_id integer NOT NULL,
     black_card_id integer NOT NULL
 );
 
 
-ALTER TABLE card_set_black_card OWNER TO pyx;
+ALTER TABLE public.card_set_black_card OWNER TO pyx;
 
 --
--- TOC entry 188 (class 1259 OID 17755)
 -- Name: card_set_white_card; Type: TABLE; Schema: public; Owner: pyx
 --
 
-CREATE TABLE card_set_white_card (
+CREATE TABLE public.card_set_white_card (
     card_set_id integer NOT NULL,
     white_card_id integer NOT NULL
 );
 
 
-ALTER TABLE card_set_white_card OWNER TO pyx;
+ALTER TABLE public.card_set_white_card OWNER TO pyx;
 
 --
--- TOC entry 190 (class 1259 OID 17788)
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: pyx
 --
 
-CREATE SEQUENCE hibernate_sequence
+CREATE SEQUENCE public.hibernate_sequence
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -118,29 +94,26 @@ CREATE SEQUENCE hibernate_sequence
     CACHE 1;
 
 
-ALTER TABLE hibernate_sequence OWNER TO pyx;
+ALTER TABLE public.hibernate_sequence OWNER TO pyx;
 
 --
--- TOC entry 189 (class 1259 OID 17760)
 -- Name: white_cards; Type: TABLE; Schema: public; Owner: pyx
 --
 
-CREATE TABLE white_cards (
+CREATE TABLE public.white_cards (
     id integer NOT NULL,
     text character varying(255),
     watermark character varying(255)
 );
 
 
-ALTER TABLE white_cards OWNER TO pyx;
+ALTER TABLE public.white_cards OWNER TO pyx;
 
 --
--- TOC entry 2189 (class 0 OID 17734)
--- Dependencies: 185
 -- Data for Name: black_cards; Type: TABLE DATA; Schema: public; Owner: pyx
 --
 
-COPY black_cards (id, draw, pick, text, watermark) FROM stdin;
+COPY public.black_cards (id, draw, pick, text, watermark) FROM stdin;
 1	0	1	Here is the church Here is the steeple Open the doors And there is ____.	US
 3	0	1	50% of all marriages end in ____.	US
 4	0	1	As the mom of five rambunctious boys, I'm no stranger to ____.	US
@@ -682,16 +655,84 @@ COPY black_cards (id, draw, pick, text, watermark) FROM stdin;
 578	0	2	I need you like ____ needs ____.	WWW
 579	0	2	Such ____. Very ____. Wow.	WWW
 580	0	1	Nothing says "I love you" like ____.	WWW
+2623	0	1	Class, pay close attention. I will now demonstrate the physics of ____.	FMLYβ
+2624	0	1	Coming to theaters this holiday season, "Star Wars: The Rise of ____."	FMLYβ
+2625	0	1	Never fear, Captain ____ is here!	FMLYβ
+2626	0	1	I don't really know what my mom's job is, but I think it has something to do with ____.	FMLYβ
+2627	0	1	What's about to take this school dance to the next level?	FMLYβ
+2628	0	1	Shut up, Becky! At least I'm not ____.	FMLYβ
+2629	0	1	Oh, no thank you, Mrs. Lee. I've had plenty of ____ for now.	FMLYβ
+2630	0	1	MY NAME CHUNGO. CHUNGO LOVE ____.	FMLYβ
+2631	0	1	Foolish child! Did you think you could escape from ____?	FMLYβ
+2632	0	1	Beep beep! ____ coming through!	FMLYβ
+2633	0	1	My favorite book is "The Amazing Adventures of ____."	FMLYβ
+2634	0	1	We're off to see the wizard, the wonderful wizard of ____!	FMLYβ
+2635	0	1	Boys? No. ____? Yes!	FMLYβ
+2636	0	1	At school, I'm just Mandy. But at summer camp, I'm "____ Mandy."	FMLYβ
+2637	0	1	We're not supposed to go in the attic. My parents keep ____ in there.	FMLYβ
+2638	0	1	Outback Steakhouse: No rules. Just ____.	FMLYβ
+2639	0	1	I have invented a new sport. I call it "____ ball."	FMLYβ
+2640	0	1	Bow before me, for I am the Queen of ____!	FMLYβ
+2641	0	1	Guys, stop it! There's nothing funny about ____.	FMLYβ
+2642	0	1	Thanks for watching! If you want to see more vids of ____, smash that subscribe.	FMLYβ
+2643	0	1	Hey, kids. I'm Sensei Todd. Today, I'm gonna teach you how to defend yourself against ____.	FMLYβ
+2644	0	1	There's nothing better than a peanut butter and ____ sandwich.	FMLYβ
+2645	0	1	CHUNGO FEEL SICK. CHUNGO NO LIKE ____ ANYMORE.	FMLYβ
+2646	0	1	What killed Old Jim?	FMLYβ
+2647	0	1	Oh Dark Lord, we show our devotion with a humble offering of ____!	FMLYβ
+2648	0	1	Mom? You have to come pick me up! There's ____ at this party.	FMLYβ
+2649	0	1	Run, run, as fast as you can. You can't catch me, I'm ____!	FMLYβ
+2650	0	1	They call me "Mr. ____."	FMLYβ
+2651	0	1	New from Mattel! It's BUNGO: The Game of ____.	FMLYβ
+2652	0	1	One nation, under God, indivisible, with liberty and ____ for all.	FMLYβ
+2653	0	1	Moms love ____.	FMLYβ
+2654	0	1	My name is Peter Parker. I was bitten by a radioactive spider, and now I'm ____.	FMLYβ
+2655	0	1	The easiest way to tell me and my twin apart is that I have a freckle on my cheek and she's ____.	FMLYβ
+2656	0	1	It's BIG. It's SCARY. It's ____!	FMLYβ
+2657	0	1	My dad and I enjoy ____ together.	FMLYβ
+2658	0	1	Attention students. This is Principal Butthead. Please remember that we do not allow ____ in the hallway. Thank you.	FMLYβ
+2659	0	1	Well, look at what we have here! A big fancy man walkin' in like he's ____.	FMLYβ
+2660	0	1	Did you know that Benjamin Franklin invented ____?	FMLYβ
+2661	0	1	Ladies and gentlemen, I have discovered something amazing. I have discovered ____.	FMLYβ
+2662	0	1	Coming soon! Batman vs. ____.	FMLYβ
+2663	0	1	Ew. Grandpa smells like ____.	FMLYβ
+2664	0	1	Kids, Dad is trying something new this week. It's called "____."	FMLYβ
+2665	0	1	James Bond will return in "No Time for ____."	FMLYβ
+2666	0	1	The warm August air was filled with change. Things were different, for Emily was now ____.	FMLYβ
+2667	0	1	The aliens are here. They want ____.	FMLYβ
+2668	0	1	Huddle up, Wildcats! They may be bigger. They may be faster. But we've got a secret weapon: ____.	FMLYβ
+2669	0	1	Hey guys. I just want to tell all my followers who are struggling with ____: it DOES get better.	FMLYβ
+2670	0	1	Madam President, we've run out of time. The only option is ____.	FMLYβ
+2671	0	1	Now in bookstores: Nancy Drew and the Mystery of ____.	FMLYβ
+2672	0	1	Where do babies come from?	FMLYβ
+2673	0	1	Alright, which one of you little turds is responsible for ____?!	FMLYβ
+2674	0	1	This is gonna be the best sleepover ever. Once Mom and Dad go to bed, it's time for ____!	FMLYβ
+2675	0	1	You don't love me, Sam. All you care about is ____.	FMLYβ
+2676	0	1	Come on, Danny. All the cool kids are doin' it. Wanna try ____?	FMLYβ
+2677	0	1	Today we honor St. Mungo, the patron saint of ____.	FMLYβ
+2678	0	1	Me and my friends don't play with dolls anymore. We're into ____ now.	FMLYβ
+2679	0	1	ENOUGH! I will not let ____ tear this family apart!	FMLYβ
+2680	0	1	I lost my arm in a ____ accident.	FMLYβ
+2681	0	1	Police! Arrest this man! He's ____.	FMLYβ
+2682	0	1	Time to put on my favorite t-shirt, the one that says "I heart ____."	FMLYβ
+2683	0	1	When I pooped, what came out of my butt?	FMLYβ
+2684	0	1	Before I attend your sleepover, I must inform you: toys bore me, and I don't care for sweets. I prefer ____.	FMLYβ
+2685	0	1	Next from J.K. Rowling: Harry Potter and the Chamber of ____.	FMLYβ
+2686	0	1	Come with me, and I will show you a world of ____.	FMLYβ
+2687	0	1	Isn't this great, honey? Just you, me, the kids, and ____.	FMLYβ
+2688	0	1	Hey, check out my band! We're called "Rage Against ____."	FMLYβ
+2689	0	1	Whoa there, partner! Looks like ____ spooked my horse.	FMLYβ
+2690	0	1	Joey, look out behind you! It's ____!	FMLYβ
+2691	0	1	____? No.	FMLYβ
+2692	0	1	ME HUNGRY. ME WANT ____.	FMLYβ
 \.
 
 
 --
--- TOC entry 2190 (class 0 OID 17742)
--- Dependencies: 186
 -- Data for Name: card_set; Type: TABLE DATA; Schema: public; Owner: pyx
 --
 
-COPY card_set (id, active, base_deck, description, name, weight) FROM stdin;
+COPY public.card_set (id, active, base_deck, description, name, weight) FROM stdin;
 2	t	f	Base Game (US)	Base Game (US)	1
 103	t	f	Base Game (Canada)	Base Game (Canada)	2
 134	t	f	Base Game (UK)	Base Game (UK)	3
@@ -734,16 +775,15 @@ COPY card_set (id, active, base_deck, description, name, weight) FROM stdin;
 2131	t	f	Box Expansion Pack	Box Expansion Pack	30
 2152	t	f	Hidden Compartment Pack	Hidden Compartment Pack	30
 2374	t	f	PAX Prime 2014 Pack	PAX Prime 2014 Pack	107
+3043	t	f	Family Edition Beta	Family Edition Beta	120
 \.
 
 
 --
--- TOC entry 2191 (class 0 OID 17750)
--- Dependencies: 187
 -- Data for Name: card_set_black_card; Type: TABLE DATA; Schema: public; Owner: pyx
 --
 
-COPY card_set_black_card (card_set_id, black_card_id) FROM stdin;
+COPY public.card_set_black_card (card_set_id, black_card_id) FROM stdin;
 2	1
 2	3
 2	4
@@ -1593,16 +1633,84 @@ COPY card_set_black_card (card_set_id, black_card_id) FROM stdin;
 572	573
 572	574
 572	575
+3043	2623
+3043	2624
+3043	2625
+3043	2626
+3043	2627
+3043	2628
+3043	2629
+3043	2630
+3043	2631
+3043	2632
+3043	2633
+3043	2634
+3043	2635
+3043	2636
+3043	2637
+3043	2638
+3043	2639
+3043	2640
+3043	2641
+3043	2642
+3043	2643
+3043	2644
+3043	2645
+3043	2646
+3043	2647
+3043	2648
+3043	2649
+3043	2650
+3043	2651
+3043	2652
+3043	2653
+3043	2654
+3043	2655
+3043	2656
+3043	2657
+3043	2658
+3043	2659
+3043	2660
+3043	2661
+3043	2662
+3043	2663
+3043	2664
+3043	2665
+3043	2666
+3043	2667
+3043	2668
+3043	2669
+3043	2670
+3043	2671
+3043	2672
+3043	2673
+3043	2674
+3043	2675
+3043	2676
+3043	2677
+3043	2678
+3043	2679
+3043	2680
+3043	2681
+3043	2682
+3043	2683
+3043	2684
+3043	2685
+3043	2686
+3043	2687
+3043	2688
+3043	2689
+3043	2690
+3043	2691
+3043	2692
 \.
 
 
 --
--- TOC entry 2192 (class 0 OID 17755)
--- Dependencies: 188
 -- Data for Name: card_set_white_card; Type: TABLE DATA; Schema: public; Owner: pyx
 --
 
-COPY card_set_white_card (card_set_id, white_card_id) FROM stdin;
+COPY public.card_set_white_card (card_set_id, white_card_id) FROM stdin;
 2	1024
 2	1025
 2	1026
@@ -5432,16 +5540,364 @@ COPY card_set_white_card (card_set_id, white_card_id) FROM stdin;
 2374	2365
 2374	2366
 2374	2367
+3043	2693
+3043	2694
+3043	2695
+3043	2696
+3043	2697
+3043	2698
+3043	2699
+3043	2700
+3043	2701
+3043	2702
+3043	2703
+3043	2704
+3043	2705
+3043	2706
+3043	2707
+3043	2708
+3043	2709
+3043	2710
+3043	2711
+3043	2712
+3043	2713
+3043	2714
+3043	2715
+3043	2716
+3043	2717
+3043	2718
+3043	2719
+3043	2720
+3043	2721
+3043	2722
+3043	2723
+3043	2724
+3043	2725
+3043	2726
+3043	2727
+3043	2728
+3043	2729
+3043	2730
+3043	2731
+3043	2732
+3043	2733
+3043	2734
+3043	2735
+3043	2736
+3043	2737
+3043	2738
+3043	2739
+3043	2740
+3043	2741
+3043	2742
+3043	2743
+3043	2744
+3043	2745
+3043	2746
+3043	2747
+3043	2748
+3043	2749
+3043	2750
+3043	2751
+3043	2752
+3043	2753
+3043	2754
+3043	2755
+3043	2756
+3043	2757
+3043	2758
+3043	2759
+3043	2760
+3043	2761
+3043	2762
+3043	2763
+3043	2764
+3043	2765
+3043	2766
+3043	2767
+3043	2768
+3043	2769
+3043	2770
+3043	2771
+3043	2772
+3043	2773
+3043	2774
+3043	2775
+3043	2776
+3043	2777
+3043	2778
+3043	2779
+3043	2780
+3043	2781
+3043	2782
+3043	2783
+3043	2784
+3043	2785
+3043	2786
+3043	2787
+3043	2788
+3043	2789
+3043	2790
+3043	2791
+3043	2792
+3043	2793
+3043	2794
+3043	2795
+3043	2796
+3043	2797
+3043	2798
+3043	2799
+3043	2800
+3043	2801
+3043	2802
+3043	2803
+3043	2804
+3043	2805
+3043	2806
+3043	2807
+3043	2808
+3043	2809
+3043	2810
+3043	2811
+3043	2812
+3043	2813
+3043	2814
+3043	2815
+3043	2816
+3043	2817
+3043	2818
+3043	2819
+3043	2820
+3043	2821
+3043	2822
+3043	2823
+3043	2824
+3043	2825
+3043	2826
+3043	2827
+3043	2828
+3043	2829
+3043	2830
+3043	2831
+3043	2832
+3043	2833
+3043	2834
+3043	2835
+3043	2836
+3043	2837
+3043	2838
+3043	2839
+3043	2840
+3043	2841
+3043	2842
+3043	2843
+3043	2844
+3043	2845
+3043	2846
+3043	2847
+3043	2848
+3043	2849
+3043	2850
+3043	2851
+3043	2852
+3043	2853
+3043	2854
+3043	2855
+3043	2856
+3043	2857
+3043	2858
+3043	2859
+3043	2860
+3043	2861
+3043	2862
+3043	2863
+3043	2864
+3043	2865
+3043	2866
+3043	2867
+3043	2868
+3043	2869
+3043	2870
+3043	2871
+3043	2872
+3043	2873
+3043	2874
+3043	2875
+3043	2876
+3043	2877
+3043	2878
+3043	2879
+3043	2880
+3043	2881
+3043	2882
+3043	2883
+3043	2884
+3043	2885
+3043	2886
+3043	2887
+3043	2888
+3043	2889
+3043	2890
+3043	2891
+3043	2892
+3043	2893
+3043	2894
+3043	2895
+3043	2896
+3043	2897
+3043	2898
+3043	2899
+3043	2900
+3043	2901
+3043	2902
+3043	2903
+3043	2904
+3043	2905
+3043	2906
+3043	2907
+3043	2908
+3043	2909
+3043	2910
+3043	2911
+3043	2912
+3043	2913
+3043	2914
+3043	2915
+3043	2916
+3043	2917
+3043	2918
+3043	2919
+3043	2920
+3043	2921
+3043	2922
+3043	2923
+3043	2924
+3043	2925
+3043	2926
+3043	2927
+3043	2928
+3043	2929
+3043	2930
+3043	2931
+3043	2932
+3043	2933
+3043	2934
+3043	2935
+3043	2936
+3043	2937
+3043	2938
+3043	2939
+3043	2940
+3043	2941
+3043	2942
+3043	2943
+3043	2944
+3043	2945
+3043	2946
+3043	2947
+3043	2948
+3043	2949
+3043	2950
+3043	2951
+3043	2952
+3043	2953
+3043	2954
+3043	2955
+3043	2956
+3043	2957
+3043	2958
+3043	2959
+3043	2960
+3043	2961
+3043	2962
+3043	2963
+3043	2964
+3043	2965
+3043	2966
+3043	2967
+3043	2968
+3043	2969
+3043	2970
+3043	2971
+3043	2972
+3043	2973
+3043	2974
+3043	2975
+3043	2976
+3043	2977
+3043	2978
+3043	2979
+3043	2980
+3043	2981
+3043	2982
+3043	2983
+3043	2984
+3043	2985
+3043	2986
+3043	2987
+3043	2988
+3043	2989
+3043	2990
+3043	2991
+3043	2992
+3043	2993
+3043	2994
+3043	2995
+3043	2996
+3043	2997
+3043	2998
+3043	2999
+3043	3000
+3043	3001
+3043	3002
+3043	3003
+3043	3004
+3043	3005
+3043	3006
+3043	3007
+3043	3008
+3043	3009
+3043	3010
+3043	3011
+3043	3012
+3043	3013
+3043	3014
+3043	3015
+3043	3016
+3043	3017
+3043	3018
+3043	3019
+3043	3020
+3043	3021
+3043	3022
+3043	3023
+3043	3024
+3043	3025
+3043	3026
+3043	3027
+3043	3028
+3043	3029
+3043	3030
+3043	3031
+3043	3032
+3043	3033
+3043	3034
+3043	3035
+3043	3036
+3043	3037
+3043	3038
+3043	3039
+3043	3040
+3043	3041
+3043	3042
 \.
 
 
 --
--- TOC entry 2193 (class 0 OID 17760)
--- Dependencies: 189
 -- Data for Name: white_cards; Type: TABLE DATA; Schema: public; Owner: pyx
 --
 
-COPY white_cards (id, text, watermark) FROM stdin;
+COPY public.white_cards (id, text, watermark) FROM stdin;
 581	Throwing grapes at a man until he loses touch with reality.	US
 582	My Uber driver, Pavel.	US
 583	The Hamburglar.	US
@@ -7481,100 +7937,437 @@ COPY white_cards (id, text, watermark) FROM stdin;
 2620	Game of Thrones spoilers.	WWW
 2621	Cat massage.	WWW
 2622	Matching with Mom on Tinder.	WWW
+2693	Mashing a banana into your belly button.	FMLYβ
+2694	Saving up my boogers for ten years and then building the world's largest booger.	FMLYβ
+2695	Coffee.	FMLYβ
+2696	Diarrhea.	FMLYβ
+2697	Falling in love.	FMLYβ
+2698	Drinking gasoline to see what it tastes like.	FMLYβ
+2699	My father, who is a walrus.	FMLYβ
+2700	Not wearing pants.	FMLYβ
+2701	The dentist.	FMLYβ
+2702	The baby.	FMLYβ
+2703	Old Jim's Steamy Butt Sauce.	FMLYβ
+2704	Boys.	FMLYβ
+2705	Beautiful grandma.	FMLYβ
+2706	Running away from home.	FMLYβ
+2707	Nunchucks.	FMLYβ
+2708	Bench pressing a horse.	FMLYβ
+2709	Stuffing my underwear with pancakes.	FMLYβ
+2710	Mayonnaise.	FMLYβ
+2711	Pee-pee.	FMLYβ
+2712	Obama.	FMLYβ
+2713	BULBASAUR.	FMLYβ
+2714	How much wood a woodchuck would chuck if a woodchuck could chuck wood.	FMLYβ
+2715	The oppressive system of capitalism.	FMLYβ
+2716	Big butt cheeks filled with poop.	FMLYβ
+2717	Crying in the bathroom.	FMLYβ
+2718	One tough mama.	FMLYβ
+2719	Spending my parents' hard-earned money.	FMLYβ
+2720	Chungo, the talking gorilla.	FMLYβ
+2721	Biting a rich person.	FMLYβ
+2722	Chest hair.	FMLYβ
+2723	The bus driver.	FMLYβ
+2724	Going bald.	FMLYβ
+2725	Putting my butt on stuff.	FMLYβ
+2726	Drinking a whole bottle of ranch.	FMLYβ
+2727	Sacrificing Uncle Tim.	FMLYβ
+2728	Peeing in the cat's litter box.	FMLYβ
+2729	Murdering.	FMLYβ
+2730	Butts of all shapes and sizes.	FMLYβ
+2731	A whole thing of cottage cheese.	FMLYβ
+2732	Freeing a fart from its butt prison.	FMLYβ
+2733	Butt surgery.	FMLYβ
+2734	Getting stuck in the toilet.	FMLYβ
+2735	Supreme Court Justice Ruth Bader Ginsburg.	FMLYβ
+2736	The Underground Railroad.	FMLYβ
+2737	A doll that pees real pee!	FMLYβ
+2738	John Wilkes Booth.	FMLYβ
+2739	Love.	FMLYβ
+2740	Knives.	FMLYβ
+2741	Satan.	FMLYβ
+2742	Jesus.	FMLYβ
+2743	Putting my brain into the body of a tiger.	FMLYβ
+2744	Unleashing a hell demon that will destroy our world.	FMLYβ
+2745	Abraham Lincoln.	FMLYβ
+2746	Thick, nasty burps.	FMLYβ
+2747	Having a really big head.	FMLYβ
+2748	Getting drunk.	FMLYβ
+2749	Screaming into a can of Pringles.	FMLYβ
+2750	Batman.	FMLYβ
+2751	Cheeto fingers.	FMLYβ
+2752	Elegant party hats.	FMLYβ
+2753	Climbing into a cow's butt.	FMLYβ
+2754	Whatever dad does at work.	FMLYβ
+2755	Sitting on a cake.	FMLYβ
+2756	Overthrowing the government.	FMLYβ
+2757	Butthole.	FMLYβ
+2758	Stuff.	FMLYβ
+2759	Pork.	FMLYβ
+2760	Shoplifting.	FMLYβ
+2761	Gluing my butt cheeks together.	FMLYβ
+2762	Respecting personal boundaries.	FMLYβ
+2763	Barfing into a popcorn bucket.	FMLYβ
+2764	The huge, stupid moon.	FMLYβ
+2765	Dump cake.	FMLYβ
+2766	Principal Butthead.	FMLYβ
+2767	My girlfriend, who goes to another school.	FMLYβ
+2768	Drinking out of the toilet and eating garbage.	FMLYβ
+2769	Farting a lot today.	FMLYβ
+2770	SILENCE!	FMLYβ
+2771	Getting a skull tattoo.	FMLYβ
+2772	Getting shot out of a cannon.	FMLYβ
+2773	Sharks.	FMLYβ
+2774	The Russians.	FMLYβ
+2775	Shaving Dad's back.	FMLYβ
+2776	A hot air balloon powered by fart gas.	FMLYβ
+2777	Getting slapped with a fish.	FMLYβ
+2778	Cigarettes.	FMLYβ
+2779	Water.	FMLYβ
+2780	Boogers.	FMLYβ
+2781	Baby Yoda.	FMLYβ
+2782	Dancing with my son.	FMLYβ
+2783	A big, and I mean BIG turtle.	FMLYβ
+2784	Dreaming about boys.	FMLYβ
+2785	Mowing the stupid lawn.	FMLYβ
+2786	Chugging a gallon of milk and then vomiting a gallon of milk.	FMLYβ
+2787	Beer.	FMLYβ
+2788	Thousands of lasagna.	FMLYβ
+2789	Person milk.	FMLYβ
+2790	Having many husbands.	FMLYβ
+2791	Rated-R stuff.	FMLYβ
+2792	Most of a horse.	FMLYβ
+2793	The British.	FMLYβ
+2794	Tossed salads and scrambled eggs.	FMLYβ
+2795	Old people.	FMLYβ
+2796	Blasting farts in the powder room.	FMLYβ
+2797	The beautiful potato.	FMLYβ
+2798	Dwayne "The Rock" Johnson.	FMLYβ
+2799	A butt that eats underwear.	FMLYβ
+2800	A dead body.	FMLYβ
+2801	Climate change.	FMLYβ
+2802	Failure.	FMLYβ
+2803	Hogs.	FMLYβ
+2804	Throwing up double peace signs with my besties at Starbucks.	FMLYβ
+2805	An old, dirty cat with bad breath.	FMLYβ
+2806	The terrible winter of 1609.	FMLYβ
+2807	The government.	FMLYβ
+2808	The way grandpa smells.	FMLYβ
+2809	Greta Thunberg.	FMLYβ
+2810	Dad's meatloaf.	FMLYβ
+2811	Living in the dumpster.	FMLYβ
+2812	Feasting upon human flesh.	FMLYβ
+2813	A big sad dragon with no friends.	FMLYβ
+2814	Butt hair.	FMLYβ
+2815	Licking a used bandaid.	FMLYβ
+2816	Mom's butt.	FMLYβ
+2817	Only beans.	FMLYβ
+2818	Covering myself with ketchup and mustard because I am hot dog.	FMLYβ
+2819	Naked people.	FMLYβ
+2820	A baby boomer.	FMLYβ
+2821	A baby with a full mustache.	FMLYβ
+2822	The first female President of the United States of America.	FMLYβ
+2823	Moving to Ohio.	FMLYβ
+2824	Fat stacks of cash.	FMLYβ
+2825	Mom's new haircut.	FMLYβ
+2826	Getting a girlfriend.	FMLYβ
+2827	Getting kicked in the nuts.	FMLYβ
+2828	Voldemort.	FMLYβ
+2829	Big, juicy pimples.	FMLYβ
+2830	A turd that just won't flush.	FMLYβ
+2831	Josh.	FMLYβ
+2832	Beyoncé.	FMLYβ
+2833	Questioning authority.	FMLYβ
+2834	Using balloons as boobies.	FMLYβ
+2835	A bird pooping on the president's head.	FMLYβ
+2836	14 cheeseburgers, 6 large fries, and a medium Sprite.	FMLYβ
+2837	This stupid game.	FMLYβ
+2838	A scoop of tuna.	FMLYβ
+2839	China.	FMLYβ
+2840	Swords.	FMLYβ
+2841	A poop as big as Mom.	FMLYβ
+2842	Punching everyone.	FMLYβ
+2843	Burning books.	FMLYβ
+2844	Making out in a closet.	FMLYβ
+2845	My annoying sister.	FMLYβ
+2846	Teeny, tiny turds.	FMLYβ
+2847	Illegal drugs.	FMLYβ
+2848	Being super serious right now.	FMLYβ
+2849	The whole family.	FMLYβ
+2850	Chunks.	FMLYβ
+2851	Grandma panties.	FMLYβ
+2852	Many wolves.	FMLYβ
+2853	Shutting up.	FMLYβ
+2854	Cat pee.	FMLYβ
+2855	Having no friends.	FMLYβ
+2856	The entire state of Texas.	FMLYβ
+2857	Giggling and farting and slurping milkshakes.	FMLYβ
+2858	Ariana Grande.	FMLYβ
+2859	Putting an apple in a little boy's mouth and roasting him for dinner.	FMLYβ
+2860	Getting sucked into a jet engine.	FMLYβ
+2861	My parents.	FMLYβ
+2862	A dead whale.	FMLYβ
+2863	Sitting on the toilet and going poop.	FMLYβ
+2864	Space lasers.	FMLYβ
+2865	Never showering.	FMLYβ
+2866	Politics.	FMLYβ
+2867	Kevin's mom.	FMLYβ
+2868	Getting run over by a train.	FMLYβ
+2869	Sniffing a dog's butt.	FMLYβ
+2870	A fake kid made out of wood.	FMLYβ
+2871	An owl that hates you.	FMLYβ
+2872	My big donkey brother.	FMLYβ
+2873	Balls.	FMLYβ
+2874	The sweet honking of Karen's bassoon.	FMLYβ
+2875	Getting scalded in the face with hot beans.	FMLYβ
+2876	Being French, hoh-hoh-hoh!	FMLYβ
+2877	This goat, who is my friend.	FMLYβ
+2878	Rich people	FMLYβ
+2879	Smelling like onions.	FMLYβ
+2880	Pooping barf forever.	FMLYβ
+2881	Being adopted.	FMLYβ
+2882	The old man with the rake who lives down the dark and winding road.	FMLYβ
+2883	Seymour Butts.	FMLYβ
+2884	Boobies.	FMLYβ
+2885	Locking Mother in the pantry.	FMLYβ
+2886	Fortnite.	FMLYβ
+2887	Farting and walking away.	FMLYβ
+2888	Being famous on YouTube.	FMLYβ
+2889	Going around sniffing people's armpits.	FMLYβ
+2890	Racism, sexism, and homophobia.	FMLYβ
+2891	Legs.	FMLYβ
+2892	Big, slappy hands.	FMLYβ
+2893	The gluteus maximus.	FMLYβ
+2894	One weird lookin' toe.	FMLYβ
+2895	Punching a guy through a wall.	FMLYβ
+2896	Having a baby.	FMLYβ
+2897	Getting naked.	FMLYβ
+2898	A planet-devouring space worm named "Rachel."	FMLYβ
+2899	Evil.	FMLYβ
+2900	A super angry cat I found outside.	FMLYβ
+2901	Forgetting to put on underwear.	FMLYβ
+2902	Getting my ponytail stuck in my butt.	FMLYβ
+2903	Poo-poo.	FMLYβ
+2904	Becoming taller and stronger than Father.	FMLYβ
+2905	Teaching a chicken to kill.	FMLYβ
+2906	Blossoming into a beautiful young man.	FMLYβ
+2907	Doing karate.	FMLYβ
+2908	Twerking.	FMLYβ
+2909	Becoming the president.	FMLYβ
+2910	Happy daddies with happy sandals.	FMLYβ
+2911	Hurting people's feelings.	FMLYβ
+2912	A Republican.	FMLYβ
+2913	JoJo Siwa.	FMLYβ
+2914	Blasting my math teacher into the sun.	FMLYβ
+2915	One long hair growing out of a mole.	FMLYβ
+2916	A nice, warm glass of pee.	FMLYβ
+2917	Bursting into flames.	FMLYβ
+2918	The babysitter.	FMLYβ
+2919	My future husband.	FMLYβ
+2920	My sister's stupid boyfriend.	FMLYβ
+2921	Coming back from the dead.	FMLYβ
+2922	Having to pee so bad.	FMLYβ
+2923	Feminism.	FMLYβ
+2924	Spider-Man.	FMLYβ
+2925	A screaming soccer dad.	FMLYβ
+2926	Pooping on the neighbor's lawn.	FMLYβ
+2927	Big Mississippi boys.	FMLYβ
+2928	Mom's friend, Donna.	FMLYβ
+2929	Glen's fabulous body.	FMLYβ
+2930	Fake news.	FMLYβ
+2931	Nothing.	FMLYβ
+2932	Your face.	FMLYβ
+2933	Uranus.	FMLYβ
+2934	Barf.	FMLYβ
+2935	Puberty.	FMLYβ
+2936	Stank breath.	FMLYβ
+2937	Going night night.	FMLYβ
+2938	Taking a dump in the pool.	FMLYβ
+2939	Building a ladder of hot dogs to the moon.	FMLYβ
+2940	A bear.	FMLYβ
+2941	A Democrat.	FMLYβ
+2942	The middle finger.	FMLYβ
+2943	A long, hot pee.	FMLYβ
+2944	Trying to catch that dang raccoon.	FMLYβ
+2945	An order of mozzarella sticks.	FMLYβ
+2946	A naked lady in a painting.	FMLYβ
+2947	Harry Potter.	FMLYβ
+2948	Tongue kissing.	FMLYβ
+2949	A bunch of dead squirrels on a trampoline.	FMLYβ
+2950	Grandpa.	FMLYβ
+2951	A flamethrower.	FMLYβ
+2952	Blowing up the Moon.	FMLYβ
+2953	Girls.	FMLYβ
+2954	A hug.	FMLYβ
+2955	Lighting stuff on fire.	FMLYβ
+2956	The way I feel when I see Kyle.	FMLYβ
+2957	Having no bones.	FMLYβ
+2958	Living in a pineapple under the sea.	FMLYβ
+2959	Running full speed into a wall.	FMLYβ
+2960	Kissing mom on the lips.	FMLYβ
+2961	Going beast mode.	FMLYβ
+2962	Nipples.	FMLYβ
+2963	A corn dog.	FMLYβ
+2964	Some freakin' privacy.	FMLYβ
+2965	Social media.	FMLYβ
+2966	Triangles.	FMLYβ
+2967	A hundred screaming monkeys.	FMLYβ
+2968	Big Randy.	FMLYβ
+2969	Going to Hell.	FMLYβ
+2970	Father's forbidden chocolates.	FMLYβ
+2971	A black hole.	FMLYβ
+2972	The octopus stuck to my face.	FMLYβ
+2973	Wiping my butt.	FMLYβ
+2974	Complaining.	FMLYβ
+2975	Soup.	FMLYβ
+2976	Garbage.	FMLYβ
+2977	Your mom!	FMLYβ
+2978	Literally ruining my life.	FMLYβ
+2979	Stealing people's money and going to jail.	FMLYβ
+2980	Turning 40.	FMLYβ
+2981	Hot, fresh doodies.	FMLYβ
+2982	Death.	FMLYβ
+2983	Ham.	FMLYβ
+2984	The loose skin at the joint of the elbow known as "the weenus."	FMLYβ
+2985	Eating a baby.	FMLYβ
+2986	Peeing into everyone's mouth.	FMLYβ
+2987	Bad parenting.	FMLYβ
+2988	Trees.	FMLYβ
+2989	Lice.	FMLYβ
+2990	Pizza.	FMLYβ
+2991	Cavities.	FMLYβ
+2992	Flushing myself down the toilet.	FMLYβ
+2993	A gerbil named "Gerbil."	FMLYβ
+2994	Me, your dad.	FMLYβ
+2995	Famous peanut scientist George Washington Carver.	FMLYβ
+2996	Dad's famous poops.	FMLYβ
+2997	A pregnant person.	FMLYβ
+2998	Uncle Bob.	FMLYβ
+2999	A wise, old woman with no teeth and cloudy eyes.	FMLYβ
+3000	Screaming and screaming and never waking up.	FMLYβ
+3001	Finger teeth.	FMLYβ
+3002	The divorce.	FMLYβ
+3003	Aunt Linda.	FMLYβ
+3004	Total crap.	FMLYβ
+3005	Huge pants.	FMLYβ
+3006	Dying of old age.	FMLYβ
+3007	An invisible giant who takes giant, visible poops.	FMLYβ
+3008	Getting crushed by a piano.	FMLYβ
+3009	Slapping that butt.	FMLYβ
+3010	Eating toenail clippings.	FMLYβ
+3011	The police.	FMLYβ
+3012	The president.	FMLYβ
+3013	Huge, hairy men.	FMLYβ
+3014	Horrible allergies.	FMLYβ
+3015	My annoying brother.	FMLYβ
+3016	Martin Luther King Jr.	FMLYβ
+3017	A long, long snake.	FMLYβ
+3018	Flamin' Hot Cheetos.	FMLYβ
+3019	A killer clown.	FMLYβ
+3020	Me.	FMLYβ
+3021	You.	FMLYβ
+3022	Bleeding.	FMLYβ
+3023	A cowboy who is half boy, half cow.	FMLYβ
+3024	Poseidon, Lord of the Sea.	FMLYβ
+3025	Farting, barfing, and passing out.	FMLYβ
+3026	Shrek.	FMLYβ
+3027	Squirty cheese.	FMLYβ
+3028	Playing trumpet for the mayor.	FMLYβ
+3029	Fire farts.	FMLYβ
+3030	Floating through the void of space and time.	FMLYβ
+3031	Screaming the F-word.	FMLYβ
+3032	The wettest fart you ever heard.	FMLYβ
+3033	Being dead.	FMLYβ
+3034	Filling my butt with spaghetti.	FMLYβ
+3035	Idiots.	FMLYβ
+3036	Slowly turning into cheese.	FMLYβ
+3037	The garbage man.	FMLYβ
+3038	Getting married.	FMLYβ
+3039	Eating a whole roll of toilet paper.	FMLYβ
+3040	Peer pressure.	FMLYβ
+3041	Using my butt as a microwave.	FMLYβ
+3042	Crab-walking from the toilet to get more toilet paper.	FMLYβ
 \.
 
 
 --
--- TOC entry 2202 (class 0 OID 0)
--- Dependencies: 190
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: pyx
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 2622, true);
+SELECT pg_catalog.setval('public.hibernate_sequence', 3043, true);
 
 
 --
--- TOC entry 2059 (class 2606 OID 17741)
 -- Name: black_cards black_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY black_cards
+ALTER TABLE ONLY public.black_cards
     ADD CONSTRAINT black_cards_pkey PRIMARY KEY (id);
 
 
 --
--- TOC entry 2063 (class 2606 OID 17754)
 -- Name: card_set_black_card card_set_black_card_pkey; Type: CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY card_set_black_card
+ALTER TABLE ONLY public.card_set_black_card
     ADD CONSTRAINT card_set_black_card_pkey PRIMARY KEY (card_set_id, black_card_id);
 
 
 --
--- TOC entry 2061 (class 2606 OID 17749)
 -- Name: card_set card_set_pkey; Type: CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY card_set
+ALTER TABLE ONLY public.card_set
     ADD CONSTRAINT card_set_pkey PRIMARY KEY (id);
 
 
 --
--- TOC entry 2065 (class 2606 OID 17759)
 -- Name: card_set_white_card card_set_white_card_pkey; Type: CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY card_set_white_card
+ALTER TABLE ONLY public.card_set_white_card
     ADD CONSTRAINT card_set_white_card_pkey PRIMARY KEY (card_set_id, white_card_id);
 
 
 --
--- TOC entry 2067 (class 2606 OID 17767)
 -- Name: white_cards white_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY white_cards
+ALTER TABLE ONLY public.white_cards
     ADD CONSTRAINT white_cards_pkey PRIMARY KEY (id);
 
 
 --
--- TOC entry 2069 (class 2606 OID 17773)
 -- Name: card_set_black_card fk513da45c3166b76a; Type: FK CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY card_set_black_card
-    ADD CONSTRAINT fk513da45c3166b76a FOREIGN KEY (black_card_id) REFERENCES black_cards(id);
+ALTER TABLE ONLY public.card_set_black_card
+    ADD CONSTRAINT fk513da45c3166b76a FOREIGN KEY (black_card_id) REFERENCES public.black_cards(id);
 
 
 --
--- TOC entry 2068 (class 2606 OID 17768)
 -- Name: card_set_black_card fk513da45c985dacea; Type: FK CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY card_set_black_card
-    ADD CONSTRAINT fk513da45c985dacea FOREIGN KEY (card_set_id) REFERENCES card_set(id);
+ALTER TABLE ONLY public.card_set_black_card
+    ADD CONSTRAINT fk513da45c985dacea FOREIGN KEY (card_set_id) REFERENCES public.card_set(id);
 
 
 --
--- TOC entry 2071 (class 2606 OID 17783)
 -- Name: card_set_white_card fkc248727257c340be; Type: FK CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY card_set_white_card
-    ADD CONSTRAINT fkc248727257c340be FOREIGN KEY (white_card_id) REFERENCES white_cards(id);
+ALTER TABLE ONLY public.card_set_white_card
+    ADD CONSTRAINT fkc248727257c340be FOREIGN KEY (white_card_id) REFERENCES public.white_cards(id);
 
 
 --
--- TOC entry 2070 (class 2606 OID 17778)
 -- Name: card_set_white_card fkc2487272985dacea; Type: FK CONSTRAINT; Schema: public; Owner: pyx
 --
 
-ALTER TABLE ONLY card_set_white_card
-    ADD CONSTRAINT fkc2487272985dacea FOREIGN KEY (card_set_id) REFERENCES card_set(id);
+ALTER TABLE ONLY public.card_set_white_card
+    ADD CONSTRAINT fkc2487272985dacea FOREIGN KEY (card_set_id) REFERENCES public.card_set(id);
 
-
--- Completed on 2018-02-27 15:12:09
 
 --
 -- PostgreSQL database dump complete
