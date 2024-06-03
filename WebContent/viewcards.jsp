@@ -145,9 +145,9 @@ try {
 <script type="text/javascript" src="js/QTransform.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery.tablesorter.combined.min.js"></script>
-<link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="tablesorter.theme.jui.min.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
 <jsp:include page="analytics.jsp" />
 <script type="text/javascript">
 var data = <%= JSONValue.toJSONString(data) %>;

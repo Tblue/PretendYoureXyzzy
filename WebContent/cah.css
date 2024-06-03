@@ -70,6 +70,10 @@ h2,h3,h4 {
 }
 */
 
+.ui-front {
+  z-index: 1000;
+}
+
 #menubar {
   background:#555;
   border-bottom:1px solid #333;

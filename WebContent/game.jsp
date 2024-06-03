@@ -74,8 +74,8 @@ boolean allowBlankCards = injector.getInstance(Key.get(new TypeLiteral<Boolean>(
 <script type="text/javascript" src="js/cah.ajax.builder.js"></script>
 <script type="text/javascript" src="js/cah.ajax.handlers.js"></script>
 <script type="text/javascript" src="js/cah.app.js"></script>
-<link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
 <jsp:include page="analytics.jsp" />
 </head>
 <body id="gamebody">
@@ -187,7 +187,7 @@ boolean allowBlankCards = injector.getInstance(Key.get(new TypeLiteral<Boolean>(
       <li><a href="#tab-global" class="tab-button" id="button-global">Global Chat</a></li>
     </ul>
     <div id="tab-preferences">
-      <input type="button" value="Save" onclick="cah.Preferences.save();" />
+      <input type="button" value="Save" onclick="cah.Preferences.save(true);" />
       <input type="button" value="Revert" onclick="cah.Preferences.load();" />
       <label for="hide_connect_quit">
         <dfn
@@ -522,6 +522,51 @@ boolean allowBlankCards = injector.getInstance(Key.get(new TypeLiteral<Boolean>(
     </fieldset>
   </div>
 </div>
+
+<!-- The "Enable Desktop Notifications?" dialog. -->
+<div class="hide">
+  <div id="desktop_notifications_nag_dialog" title="Enable Desktop Notifications?">
+    <p>
+      Get notified when it's your turn!
+    </p>
+    <p>
+      Would you like to enable Desktop Notifications?
+    </p>
+    <p>
+      <small><i>You can change this setting later in your User Preferences.</i></small>
+    </p>
+  </div>
+</div>
+
+<!-- Dialog shown when user saves settings with Desktop Notifications enabled, but then dismisses (not denies) the
+     browser's permission prompt. -->
+<div class="hide">
+  <div id="desktop_notifications_dismissed_dialog" title="Desktop Notification Prompt Dismissed">
+    <p>
+      You have enabled Desktop Notifications in the User Settings, but have just dismissed your browser's
+      permission prompt.
+    </p>
+    <p>
+      If this was a mistake, we can show you the permission prompt again.
+    </p>
+  </div>
+</div>
+
+<!-- Dialog shown when user saves settings with Desktop Notifications enabled, but then denies the browser's permission
+     prompt. -->
+<div class="hide">
+  <div id="desktop_notifications_denied_dialog" title="Desktop Notifications Disabled">
+    <p>
+      You have enabled Desktop Notifications in the User Settings, but have just denied your browser's permission
+      prompt.
+    </p>
+    <p>
+      If this was a mistake, you will need to configure your browser to not deny Desktop Notifications, and then click
+      the <i>Try Again</i> button below.
+    </p>
+  </div>
+</div>
+
 <div style="position:absolute; left:-99999px" role="alert" id="aria-notifications"></div>
 </body>
 </html>

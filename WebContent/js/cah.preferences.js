@@ -29,7 +29,7 @@
 
 cah.Preferences = {};
 
-cah.Preferences.apply = function() {
+cah.Preferences.apply = function(from_user_settings) {
   cah.hideConnectQuit = !!$("#hide_connect_quit").prop("checked");
   cah.noPersistentId = !!$("#no_persistent_id").prop("checked");
 
@@ -38,17 +38,21 @@ cah.Preferences.apply = function() {
     cah.ignoreList[this] = true;
   });
 
-  var oldDesktopNotifications = cah.desktopNotifications;
   cah.desktopNotifications = !!$("#desktop_notifications").prop("checked");
+  if (cah.desktopNotifications && from_user_settings) {
+    Notification.requestPermission(function(result) {
+      switch (result) {
+        case "default":
+          // Permission dialog dismissed. Maybe by mistake? Give the user another chance.
+          $("#desktop_notifications_dismissed_dialog").dialog("open");
+          break;
 
-  // Need to ask user for notification permission if user has not indicated a preference yet, or the user just saved
-  // the settings in the settings dialog:
-  if (cah.desktopNotifications &&
-      (Notification.permission === "default" || Notification.permission === "denied" && oldDesktopNotifications !== undefined)) {
-    cah.log.debug("Asking user for notification permission");
-    Notification.requestPermission();
-  } else {
-    cah.log.debug("NOT asking user for notification permission");
+        case "denied":
+          // Permission denied. Can't do anything except for informing the user.
+          $("#desktop_notifications_denied_dialog").dialog("open");
+          break;
+      }
+    });
   }
 
   // TODO card set filters
@@ -77,11 +81,10 @@ cah.Preferences.load = function() {
 
   if (! ("Notification" in window)) {
     // No support for Desktop Notifications:
-    $("#desktop_notifications").prop('checked', false);
+    cah.Preferences.setDesktopNotifications(false);
     $("#desktop_notifications").prop('disabled', true);
   } else {
-    $("#desktop_notifications").prop(
-      'checked',
+    cah.Preferences.setDesktopNotifications(
       $.cookie("desktop_notifications") !== "false"
     );
   }
@@ -92,7 +95,7 @@ cah.Preferences.load = function() {
   cah.Preferences.apply();
 };
 
-cah.Preferences.save = function() {
+cah.Preferences.save = function(from_user_settings) {
   if ($("#hide_connect_quit").prop("checked")) {
     cah.setCookie("hide_connect_quit", true);
   } else {
@@ -109,10 +112,12 @@ cah.Preferences.save = function() {
 
   cah.setCookie("ignore_list", $("#ignore_list").val());
 
-  cah.setCookie(
-    "desktop_notifications",
-    !!$("#desktop_notifications").prop("checked")
-  );
+  if ("Notification" in window) {
+    cah.setCookie(
+      "desktop_notifications",
+      !!$("#desktop_notifications").prop("checked")
+    );
+  }
 
   // card set filters
   var bannedSets = [];
@@ -127,8 +132,12 @@ cah.Preferences.save = function() {
   cah.setCookie("cardsets_banned", bannedSets.join(","));
   cah.setCookie("cardsets_required", requiredSets.join(","));
 
-  cah.Preferences.apply();
+  cah.Preferences.apply(from_user_settings);
 };
+
+cah.Preferences.setDesktopNotifications = function(enabled) {
+  $("#desktop_notifications").prop("checked", enabled);
+}
 
 cah.Preferences.getBannedCardSetIds = function() {
   var banned = [];

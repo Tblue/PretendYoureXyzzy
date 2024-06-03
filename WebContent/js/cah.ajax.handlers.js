@@ -101,16 +101,23 @@ cah.ajax.autojoinGameId_ = undefined;
  */
 cah.ajax.after_registered = function() {
   cah.log.debug("done registering");
+
   $("#canvas").removeClass("hide");
   $("#bottom").removeClass("hide");
+
   // TODO once there are channels, this needs to specify the global channel
   cah.Ajax.build(cah.$.AjaxOperation.NAMES).run();
+
   if (!cah.GLOBAL_CHAT_ENABLED) {
     cah.log.error("IMPORTANT: Global chat has been disabled.");
   }
+
   cah.GameList.instance.show();
   cah.GameList.instance.update();
   cah.longpoll.longPoll();
+
+  $("#desktop_notifications_nag_dialog").dialog("open");
+
   // Dirty that we have to do this here... Oh well.
   app_resize();
 

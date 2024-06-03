@@ -61,6 +61,115 @@ $(document).ready(function() {
   $("#tabs").tabs();
   $("#button-global").click();
 
+  $("#desktop_notifications_nag_dialog").dialog({
+    width: 330,
+    modal: true,
+    draggable: false,
+    resizable: false,
+    autoOpen: false,
+    buttons: [
+      {
+        text: "Enable",
+        icon: "ui-icon-check",
+      },
+      {
+        text: "Disable",
+        icon: "ui-icon-closethick",
+        click: function(e) { $(this).dialog("close"); },
+      },
+    ],
+  });
+
+  $("#desktop_notifications_dismissed_dialog").dialog({
+    width: 330,
+    modal: true,
+    draggable: false,
+    resizable: false,
+    autoOpen: false,
+    buttons: [
+      {
+        text: "Try Again",
+        icon: "ui-icon-refresh",
+        click: function(e) {
+          Notification.requestPermission(function(result) {
+            switch (result) {
+              case "granted":
+                // Permission was granted.
+                // Preferences were already saved before this dialog was opened, so nothing left to do.
+                $(this).dialog("close");
+                break;
+
+              case "denied":
+                // Oops, user denied permission! Can't do a lot except for showing an informational message.
+                $(this).dialog("close");
+                $("#desktop_notifications_denied_dialog").dialog("open");
+                break;
+
+              case "default":
+                // Permission dialog dismissed again... Just keep the dialog open.
+                break;
+            }
+          }.bind(this));
+        }
+      },
+      {
+        text: "Disable Notifications",
+        icon: "ui-icon-cancel",
+        click: function(e) {
+          cah.Preferences.setDesktopNotifications(false);
+          cah.Preferences.save();
+          $(this).dialog("close");
+        },
+      },
+    ],
+  });
+
+  $("#desktop_notifications_denied_dialog").dialog({
+    width: 330,
+    modal: true,
+    draggable: false,
+    resizable: false,
+    autoOpen: false,
+    closeOnEscape: false,
+    classes: {
+      'ui-dialog-titlebar-close': 'hide',
+    },
+    buttons: [
+      {
+        text: "Try Again",
+        icon: "ui-icon-refresh",
+        click: function(e) {
+          Notification.requestPermission(function(result) {
+            switch (result) {
+              case "granted":
+                // Permission was granted.
+                // Preferences were already saved before this dialog was opened, so nothing left to do.
+                $(this).dialog("close");
+                break;
+
+              case "default":
+                // Shouldn't happen, but let's just handle it like "denied".
+                // FALL-THROUGH!
+
+              case "denied":
+                // Oops, user denied permission! Keep the dialog open...
+                break;
+            }
+          }.bind(this));
+        }
+      },
+      {
+        text: "Disable Notifications",
+        icon: "ui-icon-cancel",
+        click: function(e) {
+          cah.Preferences.setDesktopNotifications(false);
+          cah.Preferences.save();
+          $(this).dialog("close");
+        },
+      },
+    ],
+  });
+
   $(window).resize(app_resize);
   app_resize();
 });
@@ -413,6 +522,11 @@ function app_resize() {
     $("body").css("overflow-y", "auto");
   } else {
     $("body").css("overflow-y", "hidden");
+  }
+
+  var dialog = $("#desktop_notifications_nag_dialog");
+  if (dialog.dialog("isOpen")) {
+    dialog.dialog("option", "position", {my: "center", at: "center", of: window});
   }
 }
 
